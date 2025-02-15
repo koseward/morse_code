@@ -1,6 +1,8 @@
 <%= form_with model: message do |form| %>
   <div>
-    <%= form.button "Create Morse Code"%>
+    <div data-controller="message">
+      <button_tag {data: data-action="click->message#playBip"}>Create Morse Code</button>
+    </div>
     <%= form.label :contents %>
     <%= form.text_field :contents, :hidden => true %>
   </div>
