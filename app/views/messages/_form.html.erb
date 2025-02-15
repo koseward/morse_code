@@ -1,0 +1,11 @@
+<%= form_with model: message do |form| %>
+  <div>
+    <%= form.button "Create Morse Code", :onclick => %>
+    <%= form.label :contents %>
+    <%= form.text_field :contents, :hidden => true %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

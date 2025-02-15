@@ -1,0 +1,7 @@
+<% cache @message do %>
+<h1><%= @message.contents %></h1>
+<% end %>
+
+<%= link_to "Back", messages_path %>
+<%= link_to "Edit", edit_message_path(@message) %>
+<%= button_to "Delete", @message, method: :delete, data: { turbo_confirm: "Are you sure?" } %>

@@ -1,0 +1,12 @@
+<h1>Messages</h1>
+
+<%= link_to "New Message", new_message_path if authenticated? %>
+
+<div id="products">
+  <% @messages.each do |message| %>
+    <div>
+        <%= link_to message.contents, message %>
+      </a>
+    </div>
+  <% end %>
+</div>
