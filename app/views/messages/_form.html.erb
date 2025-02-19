@@ -1,12 +1,15 @@
 <%= form_with model: message do |form| %>
   <div>
     <div data-controller="message">
-      <button_tag {data: data-action="click->message#playBip"}>Create Morse Code</button>
+      <%= button_tag 'Start Audio', {type: 'button', data: {'action': 'click->message#startAudio'}} %>
+      <%= button_tag 'Create Morse Code', {type: 'button', data: {'action': 'click->message#playDot'}} %>
     </div>
     <%= form.label :contents %>
-    <%= form.text_field :contents, :hidden => true %>
+    <%= form.text_field :contents, pattern: "^[\-. ]+$", :class => "form-control", placeholder: 'Accepts only spaces(" "), "." and "-"' %>
   </div>
 
+  <br/>
+  <br/>
   <div>
     <%= form.submit %>
   </div>
