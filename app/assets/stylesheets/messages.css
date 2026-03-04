@@ -1,0 +1,8 @@
+.contents-text-area{
+    overflow: scroll;
+    resize: vertical;
+}
+
+#empty-space{
+    height: 300px;
+}

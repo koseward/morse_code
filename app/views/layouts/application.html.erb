@@ -23,13 +23,25 @@
   </head>
 
   <body>
-    <nav>
-      <%= link_to "Home", root_path %>
-      <%= link_to "Login", new_session_path unless authenticated? %>
-      <%= button_to "Log out", session_path, method: :delete if authenticated? %>
+    <nav class="navbar navbar-expang-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <%= link_to "MC Messages", root_path, {class: "navbar-brand"}%>
+        <div class="collapse navbar-collapse" id="navbar-supported-content">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            </li>
+            <li class="nav-item">
+            </li>
+          </ul>
+        </div>
+        <div class="justify-content-end">
+          <%= link_to "Login", new_session_path, {class: "nav-link btn btn-lg btn-primary"} unless authenticated? %>
+          <%= button_to "Log out", session_path, method: :delete, :class => "nav-link btn btn-lg btn-primary" if authenticated?  %>
+        </div>
+      </div>
     </nav>
 
-    <main>
+    <main class="main-body">
       <%= yield %>
     </main>
   </body>

@@ -1,12 +1,16 @@
-<h1>Messages</h1>
+<h1 class="display-3">Messages</h1>
 
-<%= link_to "New Message", new_message_path if authenticated? %>
+<% if authenticated? %>
+  <%= link_to "New Message", new_message_path, {class: 'btn btn-primary'} %>
+<% end %>
 
 <div id="products">
-  <% @messages.each do |message| %>
-    <div>
-        <%= link_to message.contents, message %>
-      </a>
-    </div>
-  <% end %>
+  <ul class="list-group">
+    <% @messages.each do |message| %>
+      <li class="">
+          <%= link_to message.translated_message, message, {class: 'link-underline link-underline-opacity-0 text-reset d-block list-group-item list-group-item-action'} %>
+          <%= content_tag :span, message.response %>
+      </li>
+    <% end %>
+  </ul>
 </div>

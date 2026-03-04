@@ -14,8 +14,9 @@ class MessagesController < ApplicationController
   end
 
   def create
+    p message_params
     @message = Message.new(message_params)
-    @message.translated_message = translate_message @message.contents
+    @message.user = Current.user
     if @message.save
       redirect_to @message
     else
@@ -27,7 +28,9 @@ class MessagesController < ApplicationController
   end
 
   def update
-    if @message.update(message_params)
+    @message.update message_params
+    @message.translate_message!
+    if @message.save
       redirect_to @message
     else
       render :edit, status: :unprocessable_entity
@@ -44,66 +47,8 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
   end
 
-  def translate_message(message)
-    result = ""
-    message.split("       ").each do |word|
-      word.split(" ").each do |character|
-        result = result + morse_code_dictionary[character.to_sym]
-      end
-    end
-    result
-  end
 
   def message_params
-    params.expect(message: [ :contents ])
-  end
-
-  def morse_code_dictionary
-    {
-     ".-": "A",
-     "-...": "B",
-     "-.-.": "C",
-     "-..": "D",
-     ".": "E",
-     "..-.": "F",
-     "--.": "G",
-     "....": "H",
-     "..": "I",
-     ".---": "J",
-     "-.-": "K",
-     ".-..": "L",
-     "--": "M",
-     "-.": "N",
-     "---": "O",
-     ".--.": "P",
-     "--.-": "Q",
-     ".-.": "R",
-     "...": "S",
-     "-": "T",
-     "..-": "U",
-     "...-": "V",
-     ".--": "W",
-     "-..-": "X",
-     "-.--": "Y",
-     "--..": "Z",
-     ".----": "1",
-     "..---": "2",
-     "...--": "3",
-     "....-": "4",
-     ".....": "5",
-     "-....": "6",
-     "--...": "7",
-     "---..": "8",
-     "----.": "9",
-     "-----": "0",
-     ".-.-.-": ".",
-     "--..--": ",",
-     "..--..": "?",
-     "---...": ":",
-     "-.-.-.": ";",
-     "-....-": "-",
-     ".-..-.": '"',
-     "-.-.--": "!"
-    }
+    params.expect(message: [ :contents, :translated_message ])
   end
 end

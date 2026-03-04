@@ -1,16 +1,23 @@
 <%= form_with model: message do |form| %>
-  <div>
-    <div data-controller="message">
-      <%= button_tag 'Start Audio', {type: 'button', data: {'action': 'click->message#startAudio'}} %>
-      <%= button_tag 'Create Morse Code', {type: 'button', data: {'action': 'click->message#playDot'}} %>
+  <div data-controller="message" data-message="<%="#{@message.contents}"%>">
+    <div class="flex">
+      <%= button_tag 'Play Message', {type: 'button', data: {'action': 'click->message#playMessage'}, class: 'btn btn-outline-primary'} %>
     </div>
-    <%= form.label :contents %>
-    <%= form.text_field :contents, pattern: "^[\-. ]+$", :class => "form-control", placeholder: 'Accepts only spaces(" "), "." and "-"' %>
+    <br/>
+    <div>
+      <%= form.label :contents, {class: 'form-label'} %>
+      <%= form.text_area :contents, data: {'action': 'input->message#translateMessage', 'message-target': 'message'}, class: 'contents-text-area form-control', size: "100x5",
+      placeholder: 'Enter either morse code in the form of "." "-", " ", and "/" to break up words or enter your message in english.' %>
+      <%= form.label :translated_contents, {class: 'form-label d-none'} %>
+      <%= form.text_area :translated_message, data: {'message-target': 'translatedMessageDisplay'}, class: 'contents-text-area form-control', readOnly: true, size: "100x5",
+      placeholder: 'Your translated text should appear here. Invalid characters will appear as "#".' %>
+    </div>
   </div>
 
   <br/>
   <br/>
   <div>
-    <%= form.submit %>
+    <%= form.submit nil, {class: 'btn btn-primary mb-3'} %>
+    <%= link_to "Cancel", messages_path, {class: 'btn btn-warning mb-3', role: 'button'} %>
   </div>
 <% end %>
